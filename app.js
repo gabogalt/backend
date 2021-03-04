@@ -3,6 +3,14 @@ var express = require("express");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
+//requerimos dotenv
+const doten = require("dotenv");
+doten.config();
+
+//requerimos y usamos la base de datos
+const { dbConnection } = require("./database/db");
+dbConnection();
+
 // Requerimos las rutas que vamos a usar
 const user = require("./routes/user");
 
