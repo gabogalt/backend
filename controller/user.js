@@ -10,11 +10,31 @@ const create = async (req, res) => {
 		user = new User(req.body);
 		user.password = await hash(password);
 		await user.save();
-		res.status(200).json("Se ha creado el nuevo usuario con exito");
+		res.status(201).json("Se ha creado el nuevo usuario con exito");
 	} catch (e) {
 		console.error(e);
 		res.sendStatus(500);
 	}
 };
 
-module.exports = { create };
+const auth = async (req, res) => {
+	try {
+		const { email, password } = req.body;
+		const user = await User.findOne({ email }, { password: 1 });
+		if (user == null)
+			return res.json({
+				messages: "El correo ingresado no se encuentra registrado",
+			});
+		const isPasswordValid = unhash(password, user.password);
+		if (isPasswordValid) {
+			res.json({ messages: "Bienvenido usuario" });
+		} else {
+			res.json({ messages: "Contraseña incorrecta" });
+		}
+	} catch (e) {
+		console.error(e);
+		res.sendStatus(500);
+	}
+};
+
+module.exports = { create, auth };

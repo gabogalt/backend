@@ -32,7 +32,7 @@ app.use((_, res) => {
 // error handler
 app.use((err, req, res, next) => {
 	console.error(err);
-	res.senStatus(500);
+	res.sendStatus(500);
 });
 
 module.exports = app;
