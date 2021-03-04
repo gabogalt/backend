@@ -5,6 +5,10 @@ const schemaUser = Schema({
 		type: String,
 		required: true,
 	},
+	verificationCode: {
+		type: String,
+		required: true,
+	},
 	email: {
 		type: String,
 		required: true,
