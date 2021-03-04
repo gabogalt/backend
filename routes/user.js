@@ -3,6 +3,6 @@ const router = Router();
 
 const { create } = require("../controller/user");
 
-router.post("/", create);
+router.post("/create", create);
 
 module.exports = router;
