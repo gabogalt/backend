@@ -1,0 +1,463 @@
+FORMAT: 1A
+HOST: https://localhost:8000
+
+# Backend API
+
+"Backend is an API that will allow you to find information related to the movies, characters, and vehicles of the Star Wars universe.
+
+# Group Get Started
+
+## Register [/api/register]
+
+### Register [POST]
+    To start using our API, you must have a verification token. To obtain it, you must first register in our API. When you register, a token will be generated and you will be able to make requests to our API.
+
+    + Request ()
+
+        {
+            "name":"gabriel test",
+            "email":"gabo@info.com",
+            "password": "244hjb324"
+        }
+
++ Response 200 ()
+
+        [
+            {
+                "user": {
+                    "name": "gabriel test",
+                    "email": "gabo@info.com",
+                    "updated_at": "2023-04-26T20:30:07.000000Z",
+                    "created_at": "2023-04-26T20:30:07.000000Z",
+                    "id": 2
+                },
+                "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3JlZ2lzdGVyIiwiaWF0IjoxNjgyNTQxMDA4LCJleHAiOjE2ODI1NDQ2MDgsIm5iZiI6MTY4MjU0MTAwOCwianRpIjoibFlvY3BmT0xxMzBKcXlGUSIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.28pQj6LFLEEc-ZCyan6cUCRW7zcgE5Gt-6gZqgVX99wrfrf"
+            }
+        ]
+
+## Login [/api/login]
+
+### Login [POST]
+    "If you already have an account on the API, you can log in and get your token.
+
+    + Request ()
+
+        {
+            "email":"gabo@info.com",
+            "password": "244hjb324"
+        }
+
++ Response 200 ()
+
+        {
+        
+            "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3JlZ2lzdGVyIiwiaWF0IjoxNjgyNTQxMDA4LCJleHAiOjE2ODI1NDQ2MDgsIm5iZiI6MTY4MjU0MTAwOCwianRpIjoibFlvY3BmT0xxMzBKcXlGUSIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.28pQj6LFLEEc-ZCyan6cUCRW7zcgE5Gt-6gZqgVX99weewrerw"
+        }
+        
+## Base Url [/api]
+
+### Base Url [GET]
+    Once we have our security token, we can access our base URL and get all the URLs where we can make a request.
+
++ Headers
+    
+        Authentication: Bearer [Token]
+    
++ Response 200 ()
+
+        {
+            "people": "https://localhost:8000/api/people/",
+            "films": "https://localhost:8000/api/films/",
+            "vehicles": "https://localhost:8000/api/vehicles/",
+        }
+
+# Group People
+
+## People [/api/people/?offset=2&limit=10&name=luke]
+
+### People [GET]
+    Returns all registered characters.
+
++ Parameters
+    + limit: 10 (number,optional) - 
+    + offset: 2 (number,optional) -  To use this parameter, you must also use a limit.
+    + name: Luke (string, optional) - "Allows you to search for a character by name."
+
+
+
++ Headers
+    
+        Authentication: Bearer [Token]
+    
+
++ Response 200 ()
+    + Attributes 
+        + id int
+        + name string
+        + height string
+        + mass string
+        + hair_color string
+        + skin_color string
+        + eye_color string
+        + birth_year string
+        + gender string
+        + homeworld string
+        + films array 
+        + vehicles array 
+        + url string
+        + created_at datetime
+
+    + body 
+        {
+            "count": 2,
+            "people": [
+                {
+                    "id": 11,
+                    "name": "Luke Skywalker",
+                    "height": "172",
+                    "mass": "77",
+                    "hair_color": "blond",
+                    "skin_color": "fair",
+                    "eye_color": "blue",
+                    "birth_year": null,
+                    "gender": "male",
+                    "homeworld": "https://swapi.dev/api/planets/1/",
+                    "films": "[\"https://swapi.dev/api/films/1/\", \"https://swapi.dev/api/films/2/\", \"https://swapi.dev/api/films/3/\", \"https://swapi.dev/api/films/6/\"]",
+                    "vehicles": "[\"https://swapi.dev/api/vehicles/14/\", \"https://swapi.dev/api/vehicles/30/\"]",
+                    "url": "https://swapi.dev/api/people/1/",
+                    "created_at": null,
+                    "update_at": null
+                },
+                {
+                    "id": 12,
+                    "name": "C-3PO",
+                    "height": "167",
+                    "mass": "75",
+                    "hair_color": "n/a",
+                    "skin_color": "gold",
+                    "eye_color": "yellow",
+                    "birth_year": null,
+                    "gender": "n/a",
+                    "homeworld": "https://swapi.dev/api/planets/1/",
+                    "films": "[\"https://swapi.dev/api/films/1/\", \"https://swapi.dev/api/films/2/\", \"https://swapi.dev/api/films/3/\", \"https://swapi.dev/api/films/4/\", \"https://swapi.dev/api/films/5/\", \"https://swapi.dev/api/films/6/\"]",
+                    "vehicles": "[]",
+                    "url": "https://swapi.dev/api/people/2/",
+                    "created_at": null,
+                    "update_at": null
+                },
+            ]
+        }
+        
+## Get one Character  [/api/people/{id}]
+
+### Get one Character [GET]
+    Return a character.
+
++ Parameters
+
+    + id: 1 (number)
+
++ Headers
+    
+        Authentication: Bearer [Token]
+    
+
++ Response 200 ()
+    + Attributes 
+        + id int
+        + name string
+        + height string
+        + mass string
+        + hair_color string
+        + skin_color string
+        + eye_color string
+        + birth_year string
+        + gender string
+        + homeworld string
+        + films array 
+        + vehicles array 
+        + url string
+        + created_at datetime
+
+    + body 
+        {
+        "people": {
+            "id": 25,
+            "name": "Greedo",
+            "height": "173",
+            "mass": "74",
+            "hair_color": "n/a",
+            "skin_color": "green",
+            "eye_color": "black",
+            "birth_year": null,
+            "gender": "male",
+            "homeworld": "https://swapi.dev/api/planets/23/",
+            "films": "[\"https://swapi.dev/api/films/1/\"]",
+            "vehicles": "[]",
+            "url": "https://swapi.dev/api/people/15/",
+            "created_at": null,
+            "update_at": null
+        }
+    }
+
+# Group Vehicles
+
+## Vehicles [/api/vehicles/?offse=2&limit=10&name=sand]
+
+### Vehicles [GET]
+    Returns all vechiles.
+
++ Parameters
+    + limit: 10 (number,optional) - 
+    + offset: 2 (number,optional) -  To use this parameter, you must also use a limit.
+    + name: Sand (string, optional) - Allows you to search for a character by name.
+
+
++ Headers
+    
+        Authentication: Bearer [Token]
+
++ Response 200 ()
+
+    + Attributes
+    + id int
+    + name string
+    + model string
+    + manufacturer text 
+    + cost_in_credits string
+    + length string
+    + max_atmosphering_speed string
+    + crew string
+    + passengers string
+    + cargo_capacity string
+    + consumables string
+    + vehicle_class string
+    + pilots array 
+    + films array 
+    + url text 
+    + create_at datetime 
+    + update_at datetime
+
+
+      + body  
+       {
+        "count": 2,
+        "vehicles": [
+            {
+                "id": 1,
+                "name": "Sand Crawler",
+                "model": "Digger Crawler",
+                "manufacturer": "Corellia Mining Corporation",
+                "cost_in_credits": "150000",
+                "length": "36.8 ",
+                "max_atmosphering_speed": "30",
+                "crew": "46",
+                "passengers": "30",
+                "cargo_capacity": "50000",
+                "consumables": "2 months",
+                "vehicle_class": "wheeled",
+                "pilots": "[]",
+                "films": "[\"https://swapi.dev/api/films/1/\", \"https://swapi.dev/api/films/5/\"]",
+                "url": "https://swapi.dev/api/vehicles/4/",
+                "create_at": "2023-04-26 00:00:00",
+                "update_at": null
+            },
+            {
+                "id": 2,
+                "name": "T-16 skyhopper",
+                "model": "T-16 skyhopper",
+                "manufacturer": "Incom Corporation",
+                "cost_in_credits": "14500",
+                "length": "10.4 ",
+                "max_atmosphering_speed": "1200",
+                "crew": "1",
+                "passengers": "1",
+                "cargo_capacity": "50",
+                "consumables": "0",
+                "vehicle_class": "repulsorcraft",
+                "pilots": "[]",
+                "films": "[\"https://swapi.dev/api/films/1/\"]",
+                "url": "https://swapi.dev/api/vehicles/6/",
+                "create_at": "2023-04-26 00:00:00",
+                "update_at": null
+            }
+        ]
+      }
+        
+## Get one Vehicle  [/api/vehicles/{id}]
+
+### Get one Vehicle [GET]
+    Return a vehicle.
+
++ Parameters
+
+    + id: 1 (number) 
+
++ Headers
+    
+        Authentication: Bearer [Token]
+    
+
++ Response 200 ()
+
+    + Attributes
+        + id int
+        + name string
+        + model string
+        + manufacturer text 
+        + cost_in_credits string
+        + length string
+        + max_atmosphering_speed string
+        + crew string
+        + passengers string
+        + cargo_capacity string
+        + consumables string
+        + vehicle_class string
+        + pilots array 
+        + films array 
+        + url text 
+        + create_at datetime 
+        + update_at datetime
+
+    + body
+     {
+    "vehicles": {
+        "id": 5,
+        "name": "Snowspeeder",
+        "model": "t-47 airspeeder",
+        "manufacturer": "Incom corporation",
+        "cost_in_credits": "unknown",
+        "length": "4.5",
+        "max_atmosphering_speed": "650",
+        "crew": "2",
+        "passengers": "0",
+        "cargo_capacity": "10",
+        "consumables": "none",
+        "vehicle_class": "airspeeder",
+        "pilots": "[\"https://swapi.dev/api/people/1/\", \"https://swapi.dev/api/people/18/\"]",
+        "films": "[\"https://swapi.dev/api/films/2/\"]",
+        "url": "https://swapi.dev/api/vehicles/14/",
+        "create_at": "2023-04-26 00:00:00",
+        "update_at": null
+    }
+     }
+
+# Group Films
+
+## Films [/api/films/?offset=2&limit=10&title=hope]
+
+### Films [GET]
+    Returns all films.
+
++ Parameters
+
+    + limit: 10 (number,optional) - 
+    + offset: 2 (number,optional) -  To use this parameter, you must also use a limit.
+    + title: A New Hope (string, optional) - Allows you to search for a character by name.
+ 
+
++ Headers
+    
+        Authentication: Bearer [Token]
+    
+
++ Response 200 ()
+
+    + Attributes 
+        + id int
+        + title string
+        + opening_crawl longtext 
+        + director string
+        + producer string
+        + release_date datetime 
+        + characters array 
+        + vehicles array 
+        + url text 
+        + create_at datetime 
+        + update_at datetime
+
+    + body 
+    {
+        "count": 2,
+        "films": [
+            {
+                "id": 12,
+                "title": "A New Hope",
+                "opening_crawl": "It is a period of civil war.\r\nRebel spaceships, striking\r\nfrom a hidden base, have won\r\ntheir first victory against\r\nthe evil Galactic Empire.\r\n\r\nDuring the battle, Rebel\r\nspies managed to steal secret\r\nplans to the Empire's\r\nultimate weapon, the DEATH\r\nSTAR, an armored space\r\nstation with enough power\r\nto destroy an entire planet.\r\n\r\nPursued by the Empire's\r\nsinister agents, Princess\r\nLeia races home aboard her\r\nstarship, custodian of the\r\nstolen plans that can save her\r\npeople and restore\r\nfreedom to the galaxy....",
+                "director": "George Lucas",
+                "producer": "Gary Kurtz, Rick McCallum",
+                "release_date": "1977-05-25 00:00:00",
+                "characters": "[\"https://swapi.dev/api/people/1/\", \"https://swapi.dev/api/people/2/\", \"https://swapi.dev/api/people/3/\", \"https://swapi.dev/api/people/4/\", \"https://swapi.dev/api/people/5/\", \"https://swapi.dev/api/people/6/\", \"https://swapi.dev/api/people/7/\", \"https://swapi.dev/api/people/8/\", \"https://swapi.dev/api/people/9/\", \"https://swapi.dev/api/people/10/\", \"https://swapi.dev/api/people/12/\", \"https://swapi.dev/api/people/13/\", \"https://swapi.dev/api/people/14/\", \"https://swapi.dev/api/people/15/\", \"https://swapi.dev/api/people/16/\", \"https://swapi.dev/api/people/18/\", \"https://swapi.dev/api/people/19/\", \"https://swapi.dev/api/people/81/\"]",
+                "vehicles": "[\"https://swapi.dev/api/vehicles/4/\", \"https://swapi.dev/api/vehicles/6/\", \"https://swapi.dev/api/vehicles/7/\", \"https://swapi.dev/api/vehicles/8/\"]",
+                "url": "https://swapi.dev/api/films/1/",
+                "create_at": "2023-04-26 00:00:00",
+                "update_at": null
+            },
+            {
+                "id": 13,
+                "title": "The Empire Strikes Back",
+                "opening_crawl": "It is a dark time for the\r\nRebellion. Although the Death\r\nStar has been destroyed,\r\nImperial troops have driven the\r\nRebel forces from their hidden\r\nbase and pursued them across\r\nthe galaxy.\r\n\r\nEvading the dreaded Imperial\r\nStarfleet, a group of freedom\r\nfighters led by Luke Skywalker\r\nhas established a new secret\r\nbase on the remote ice world\r\nof Hoth.\r\n\r\nThe evil lord Darth Vader,\r\nobsessed with finding young\r\nSkywalker, has dispatched\r\nthousands of remote probes into\r\nthe far reaches of space....",
+                "director": "Irvin Kershner",
+                "producer": "Gary Kurtz, Rick McCallum",
+                "release_date": "1980-05-17 00:00:00",
+                "characters": "[\"https://swapi.dev/api/people/1/\", \"https://swapi.dev/api/people/2/\", \"https://swapi.dev/api/people/3/\", \"https://swapi.dev/api/people/4/\", \"https://swapi.dev/api/people/5/\", \"https://swapi.dev/api/people/10/\", \"https://swapi.dev/api/people/13/\", \"https://swapi.dev/api/people/14/\", \"https://swapi.dev/api/people/18/\", \"https://swapi.dev/api/people/20/\", \"https://swapi.dev/api/people/21/\", \"https://swapi.dev/api/people/22/\", \"https://swapi.dev/api/people/23/\", \"https://swapi.dev/api/people/24/\", \"https://swapi.dev/api/people/25/\", \"https://swapi.dev/api/people/26/\"]",
+                "vehicles": "[\"https://swapi.dev/api/vehicles/8/\", \"https://swapi.dev/api/vehicles/14/\", \"https://swapi.dev/api/vehicles/16/\", \"https://swapi.dev/api/vehicles/18/\", \"https://swapi.dev/api/vehicles/19/\", \"https://swapi.dev/api/vehicles/20/\"]",
+                "url": "https://swapi.dev/api/films/2/",
+                "create_at": "2023-04-26 00:00:00",
+                "update_at": null
+            }
+        ]
+    }
+## Get one Film  [/api/films/{id}]
+
+### Get one Vehicle [GET]
+    Retorna a film.
+
++ Parameters
+
+    + id: 1 (number) 
+
+ 
++ Headers
+    
+        Authentication: Bearer [Token]
+    
+
++ Response 200 ()
+    + Attributes 
+        + id int
+        + title string
+        + opening_crawl longtext 
+        + director string
+        + producer string
+        + release_date datetime 
+        + characters array 
+        + vehicles array 
+        + url text 
+        + create_at datetime 
+        + update_at datetime
+
+   + Body
+    {
+        "vehicles": {
+            "id": 5,
+            "name": "Snowspeeder",
+            "model": "t-47 airspeeder",
+            "manufacturer": "Incom corporation",
+            "cost_in_credits": "unknown",
+            "length": "4.5",
+            "max_atmosphering_speed": "650",
+            "crew": "2",
+            "passengers": "0",
+            "cargo_capacity": "10",
+            "consumables": "none",
+            "vehicle_class": "airspeeder",
+            "pilots": "[\"https://swapi.dev/api/people/1/\", \"https://swapi.dev/api/people/18/\"]",
+            "films": "[\"https://swapi.dev/api/films/2/\"]",
+            "url": "https://swapi.dev/api/vehicles/14/",
+            "create_at": "2023-04-26 00:00:00",
+            "update_at": null
+        }
+    }
+
+
